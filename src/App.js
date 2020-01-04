@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Camera } from "./camera";
-import { Root, Footer, Preview, GlobalStyle } from "./styles";
+import { Root, Footer, GlobalStyle } from "./styles";
 import uploadToS3 from "./helpers/uploadToS3";
 import "./App.css";
 
 function App() {
-  const [isCameraOpen, setIsCameraOpen] = useState(true);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [cardImage, setCardImage] = useState(null);
-
-  useEffect(() => {
-    setIsCameraOpen(false);
-    setCardImage(undefined);
-    setIsCameraOpen(true);
-  }, []);
 
   async function s3Upload(base64) {
     try {
@@ -46,12 +40,6 @@ function App() {
           />
         )}
 
-        {/* {cardImage && (
-          <div>
-            <h2>Preview</h2>
-            <Preview src={cardImage && URL.createObjectURL(cardImage)} />
-          </div>
-        )} */}
         <Footer>
           <button onClick={() => setIsCameraOpen(true)}>Open Camera</button>
           <button
