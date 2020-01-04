@@ -31,6 +31,7 @@ export const Root = styled.main`
   overflow-x: hidden;
   overflow-y: auto;
   padding: 50px 0 100px;
+  padding-top: 20px;
 `;
 
 export const Preview = styled.img`
@@ -38,18 +39,23 @@ export const Preview = styled.img`
   height: auto;
 `;
 
-export const Footer = styled.footer`
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
+export const Button = styled.button`
+  /* position: fixed; */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50px;
-  background: silver;
+  width: 200px;
+  background: blueviolet;
+  color: white;
+  font-size: 0.8rem;
+  margin-top: 20px;
+`;
 
-  button {
-    margin: 0 10px;
-  }
+export const Input = styled.input`
+  height: 30px;
+  margin-bottom: 16px;
+  width: 200px;
+  font-size: 0.8rem;
+  border: 1px solid lightgray;
 `;

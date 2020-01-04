@@ -74,8 +74,10 @@ export const Flash = styled.div`
 export const Button = styled.button`
   width: 75%;
   min-width: 100px;
-  max-width: 250px;
+  max-width: 200px;
   margin-top: 24px;
   padding: 12px 24px;
-  background: silver;
+  background: white;
+  border: 1px solid blueviolet;
+  color: blueviolet;
 `;
