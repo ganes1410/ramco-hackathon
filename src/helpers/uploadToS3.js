@@ -1,22 +1,16 @@
 import { config } from "aws-sdk/lib/core";
+import {
+  REACT_APP_AWS_ACCESS_KEY,
+  REACT_APP_AWS_SECRET_KEY,
+  REACT_APP_AWS_REGION,
+  REACT_APP_AWS_S3_BUCKET_NAME
+} from "./credentials";
 const s3 = require("aws-sdk/clients/s3");
 
-// const {
-//   REACT_APP_AWS_ACCESS_KEY,
-//   REACT_APP_AWS_SECRET_KEY,
-//   REACT_APP_AWS_REGION,
-//   REACT_APP_AWS_S3_BUCKET_NAME
-// } = process.env;
-
-const bucketName = "hackathonash";
-// S3 Bucket Name : hackathonash
-// aws_access_key_id = AKIAXVFTJJPJGPE7K55Y
-// aws_secret_access_key = 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
-// region = us-west-2
 config.update({
-  accessKeyId: "AKIAXVFTJJPJGPE7K55Y",
-  secretAccessKey: "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",
-  region: "us-west-2"
+  accessKeyId: REACT_APP_AWS_ACCESS_KEY,
+  secretAccessKey: REACT_APP_AWS_SECRET_KEY,
+  region: REACT_APP_AWS_REGION
 });
 
 const S3 = new s3();
@@ -29,7 +23,7 @@ const uploadToS3 = (key = "", type, base64data) => {
   const params = {
     Key: `helloworld`,
     Body: buf,
-    Bucket: bucketName,
+    Bucket: REACT_APP_AWS_S3_BUCKET_NAME,
     ACL: "public-read",
     ContentEncoding: "base64",
     ContentType: type

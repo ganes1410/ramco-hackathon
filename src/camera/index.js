@@ -3,15 +3,7 @@ import Measure from "react-measure";
 import { useUserMedia } from "../hooks/use-user-media";
 import { useCardRatio } from "../hooks/use-card-ratio";
 import { useOffsets } from "../hooks/use-offsets";
-import {
-  Video,
-  Canvas,
-  Wrapper,
-  Container,
-  Flash,
-  Overlay,
-  Button
-} from "./styles";
+import { Video, Canvas, Wrapper, Container, Flash, Button } from "./styles";
 
 const CAPTURE_OPTIONS = {
   audio: false,
@@ -108,8 +100,6 @@ export function Camera({ onCapture, onClear }) {
                 left: `-${offsets.x}px`
               }}
             />
-
-            <Overlay hidden={!isVideoPlaying} />
 
             <Canvas
               ref={canvasRef}
