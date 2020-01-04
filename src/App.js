@@ -8,10 +8,11 @@ function App() {
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [cardImage, setCardImage] = useState(null);
   const [details, setDetails] = useState({ name: "", phoneNum: "" });
+  const [base64Img, setBase64Img] = useState("");
 
-  async function s3Upload(base64) {
+  async function s3Upload() {
     try {
-      const s3Url = await uploadToS3("", "image/jpeg", base64);
+      const s3Url = await uploadToS3("", "image/jpeg", base64Img);
       console.log(s3Url);
     } catch (error) {
       console.log(error);
@@ -25,6 +26,7 @@ function App() {
       reader.readAsDataURL(cardImage);
       reader.onloadend = function() {
         const base64data = reader.result;
+        setBase64Img(base64data);
         // s3Upload(base64data);
         console.log(base64data);
       };
@@ -34,6 +36,12 @@ function App() {
   function handleChange(event) {
     setDetails({ ...details, [event.target.name]: event.target.value });
   }
+
+  function closeCamera() {
+    setIsCameraOpen(false);
+    setCardImage(undefined);
+  }
+
   return (
     <>
       <Root>
@@ -54,13 +62,7 @@ function App() {
 
         {isCameraOpen ? (
           <>
-            <Button
-              onClick={() => {
-                setIsCameraOpen(false);
-                setCardImage(undefined);
-              }}
-              style={{ marginBottom: 12 }}
-            >
+            <Button onClick={closeCamera} style={{ marginBottom: 12 }}>
               Close Camera
             </Button>
             <Camera
@@ -72,7 +74,7 @@ function App() {
           <Button onClick={() => setIsCameraOpen(true)}>Open Camera</Button>
         )}
         {/* Show SUbmit only when picture is taken */}
-        {cardImage && <Button>Submit</Button>}
+        {cardImage && <Button onClick={s3Upload}>Submit</Button>}
       </Root>
       <GlobalStyle />
     </>
