@@ -28,6 +28,10 @@ function ChatApp() {
       >
         <img src={SmileIcon} alt="smile" />
         <h2>Registration successful</h2>
+        <h4 style={{ textAlign: "center" }}>
+          An invitation link has been sent to you. Please check to get more
+          exciting offers.
+        </h4>
       </div>
     );
   } else
