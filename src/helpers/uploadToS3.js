@@ -15,7 +15,12 @@ config.update({
 
 const S3 = new s3();
 
-const uploadToS3 = (key = "", type, base64data) => {
+const uploadToS3 = (
+  key = "",
+  type,
+  base64data,
+  bucketName = REACT_APP_AWS_S3_BUCKET_NAME
+) => {
   let buf = new Buffer(
     base64data.replace(/^data:image\/\w+;base64,/, ""),
     "base64"
@@ -23,7 +28,7 @@ const uploadToS3 = (key = "", type, base64data) => {
   const params = {
     Key: key,
     Body: buf,
-    Bucket: REACT_APP_AWS_S3_BUCKET_NAME,
+    Bucket: bucketName ? bucketName : REACT_APP_AWS_S3_BUCKET_NAME,
     ACL: "public-read",
     ContentEncoding: "base64",
     ContentType: type

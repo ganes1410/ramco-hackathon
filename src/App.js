@@ -3,21 +3,37 @@ import { Camera } from "./camera";
 import { Root, Button, GlobalStyle } from "./styles";
 import uploadToS3 from "./helpers/uploadToS3";
 import "./App.css";
+import updateDB from "./helpers/uploadToDb";
 
-function App(props) {
+function App({
+  recognizeBucket = false,
+  previousStep,
+  triggerNextStep = () => {}
+}) {
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [cardImage, setCardImage] = useState(null);
   const [base64Img, setBase64Img] = useState("");
+  const [details, setDetails] = useState(null);
   const [status, setStatus] = useState("idle");
 
-  const phoneNumber = props.previousStep.value;
+  const phoneNumber = previousStep ? previousStep.value : "";
+
+  const paramPhone = (details && details.phone) || `${new Date().getTime()}`;
 
   async function s3Upload() {
     try {
       setStatus("uploading");
-      const s3Url = await uploadToS3(phoneNumber, "image/jpeg", base64Img);
-      props.triggerNextStep({ value: s3Url });
+      const s3Url = await uploadToS3(
+        phoneNumber ? phoneNumber : paramPhone,
+        "image/jpeg",
+        base64Img,
+        recognizeBucket ? "hackathonramcocompare" : 0
+      );
+      triggerNextStep({ value: s3Url });
       console.log(s3Url);
+      if (recognizeBucket && details.name && details.phone) {
+        updateDB([details.name, details.phone]);
+      }
     } catch (error) {
       setStatus("failure");
       console.log(error);
@@ -38,6 +54,14 @@ function App(props) {
       };
     }
   }, [cardImage]);
+
+  useEffect(() => {
+    const url = new URL(window.location);
+    const name = url.searchParams.get("name");
+    const phone = url.searchParams.get("phone");
+    console.log(name, phone);
+    setDetails({ name, phone });
+  }, []);
 
   function closeCamera() {
     setIsCameraOpen(false);
