@@ -5,7 +5,7 @@ import updateDB from "./helpers/uploadToDb";
 import SmileIcon from "./assets/smile.svg";
 
 function ChatApp() {
-  const [status, setStatus] = useState("done");
+  const [status, setStatus] = useState("idle");
 
   async function handleEnd({ steps, values }) {
     console.log(steps);
@@ -23,7 +23,7 @@ function ChatApp() {
           alignItems: "center",
           justifyContent: "center",
           width: "100%",
-          height: "100vh"
+          height: "100%"
         }}
       >
         <img src={SmileIcon} alt="smile" />
