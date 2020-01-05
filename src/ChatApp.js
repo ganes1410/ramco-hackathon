@@ -5,7 +5,7 @@ import updateDB from "./helpers/uploadToDb";
 import SmileIcon from "./assets/smile.svg";
 
 function ChatApp() {
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState("done");
 
   async function handleEnd({ steps, values }) {
     console.log(steps);
@@ -28,10 +28,18 @@ function ChatApp() {
       >
         <img src={SmileIcon} alt="smile" />
         <h2>Registration successful</h2>
-        <h4 style={{ textAlign: "center" }}>
+        <h5 style={{ textAlign: "center" }}>
           An invitation link has been sent to you. Please check to get more
           exciting offers.
-        </h4>
+        </h5>
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=13.006459,80.244743"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Visit our store
+        </a>
+        (Just 5 min away)
       </div>
     );
   } else
