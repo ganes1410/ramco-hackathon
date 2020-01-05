@@ -34,10 +34,11 @@ function ChatApp() {
     return (
       <ChatBot
         handleEnd={handleEnd}
+        headerTitle="Register"
         steps={[
           {
             id: "1",
-            message: "What is your name?",
+            message: "What is your name ?",
             trigger: "2"
           },
           {
@@ -45,7 +46,7 @@ function ChatApp() {
             user: true,
             trigger: "3"
           },
-          { id: "3", message: "Phone Number ?", trigger: "4" },
+          { id: "3", message: "What is your Phone Number ?", trigger: "4" },
           {
             id: "4",
             user: true,
@@ -53,7 +54,7 @@ function ChatApp() {
           },
           {
             id: "5",
-            component: <App prev={`previousValue`} />,
+            component: <App />,
             waitAction: true,
             end: true
           }
