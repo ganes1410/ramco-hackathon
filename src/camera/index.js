@@ -7,7 +7,7 @@ import { Video, Canvas, Wrapper, Container, Flash, Button } from "./styles";
 
 const CAPTURE_OPTIONS = {
   audio: false,
-  video: { facingMode: "environment" }
+  video: { facingMode: "user" }
 };
 
 export function Camera({ onCapture, onClear }) {
