@@ -27,7 +27,7 @@ function App({
         phoneNumber ? phoneNumber : paramPhone,
         "image/jpeg",
         base64Img,
-        recognizeBucket ? "hackathonramcocompare" : 0
+        recognizeBucket && !details.name ? "hackathonramcocompare" : 0
       );
       triggerNextStep({ value: s3Url });
       console.log(s3Url);
