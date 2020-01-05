@@ -21,7 +21,7 @@ const uploadToS3 = (key = "", type, base64data) => {
     "base64"
   );
   const params = {
-    Key: `helloworld1`,
+    Key: key,
     Body: buf,
     Bucket: REACT_APP_AWS_S3_BUCKET_NAME,
     ACL: "public-read",

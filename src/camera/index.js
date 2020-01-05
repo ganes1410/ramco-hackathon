@@ -103,8 +103,8 @@ export function Camera({ onCapture, onClear }) {
 
             <Canvas
               ref={canvasRef}
-              width={container.width}
-              height={container.height}
+              style={{ width: "85vw" }}
+              height={"400px"}
             />
 
             <Flash

@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Camera } from "./camera";
-import { Root, Button, GlobalStyle, Input } from "./styles";
+import { Root, Button, GlobalStyle } from "./styles";
 import uploadToS3 from "./helpers/uploadToS3";
 import "./App.css";
 
-function App() {
+function App(props) {
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [cardImage, setCardImage] = useState(null);
-  const [details, setDetails] = useState({ name: "", phoneNum: "" });
   const [base64Img, setBase64Img] = useState("");
+  const [status, setStatus] = useState("idle");
+
+  const phoneNumber = props.previousStep.value;
 
   async function s3Upload() {
     try {
-      const s3Url = await uploadToS3("", "image/jpeg", base64Img);
+      setStatus("uploading");
+      const s3Url = await uploadToS3(phoneNumber, "image/jpeg", base64Img);
+      props.triggerNextStep({ value: s3Url });
       console.log(s3Url);
     } catch (error) {
+      setStatus("failure");
       console.log(error);
+    } finally {
+      setStatus("complete");
     }
   }
 
@@ -27,39 +34,20 @@ function App() {
       reader.onloadend = function() {
         const base64data = reader.result;
         setBase64Img(base64data);
-        // s3Upload(base64data);
         console.log(base64data);
       };
     }
   }, [cardImage]);
-
-  function handleChange(event) {
-    setDetails({ ...details, [event.target.name]: event.target.value });
-  }
 
   function closeCamera() {
     setIsCameraOpen(false);
     setCardImage(undefined);
   }
 
+  if (status === "complete") return <h2>Upload successful</h2>;
   return (
     <>
       <Root>
-        <h1>Your Details</h1>
-        <Input
-          type="name"
-          name="name"
-          onChange={handleChange}
-          placeholder="Name"
-        />
-        <Input
-          type="number"
-          name="phoneNum"
-          onChange={handleChange}
-          placeholder="Phone Number"
-        />
-        <h2>Upload Picture</h2>
-
         {isCameraOpen ? (
           <>
             <Button onClick={closeCamera} style={{ marginBottom: 12 }}>
@@ -74,7 +62,11 @@ function App() {
           <Button onClick={() => setIsCameraOpen(true)}>Open Camera</Button>
         )}
         {/* Show SUbmit only when picture is taken */}
-        {cardImage && <Button onClick={s3Upload}>Submit</Button>}
+        {cardImage && (
+          <Button onClick={s3Upload} disabled={status === "uploading"}>
+            {status !== "uploading" ? "Submit" : "Uploading"}
+          </Button>
+        )}
       </Root>
       <GlobalStyle />
     </>

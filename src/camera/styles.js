@@ -25,13 +25,7 @@ export const Container = styled.div`
   overflow: hidden;
 `;
 
-export const Canvas = styled.canvas`
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-`;
+export const Canvas = styled.canvas``;
 
 export const Video = styled.video`
   position: absolute;
